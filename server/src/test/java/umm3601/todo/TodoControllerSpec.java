@@ -91,12 +91,12 @@ public class TodoControllerSpec {
 
 
     @Test
-    public void getAllUsers() {
+    public void getAllTodos() {
         Map<String, String[]> emptyMap = new HashMap<>();
         String jsonResult = todoController.getTodos(emptyMap);
         BsonArray docs = parseJsonArray(jsonResult);
 
-        assertEquals("Should be 4 users", 4, docs.size());
+        assertEquals("Should be 4 todos", 4, docs.size());
         List<String> names = docs
             .stream()
             .map(TodoControllerSpec::getOwner)
@@ -105,8 +105,8 @@ public class TodoControllerSpec {
         List<String> expectedOwners = Arrays.asList("Jamie", "John", "Matt", "Nic");
         assertEquals("Owners should match", expectedOwners, names);
     }
-/*
-    @Test
+
+    /*@Test
     public void getUsersWhoAre37() {
         Map<String, String[]> argMap = new HashMap<>();
         argMap.put("age", new String[] { "37" });
@@ -121,18 +121,18 @@ public class TodoControllerSpec {
             .collect(Collectors.toList());
         List<String> expectedNames = Arrays.asList("Jamie", "Pat");
         assertEquals("Names should match", expectedNames, names);
-    }
+    }*/
 
     @Test
-    public void getSamById() {
-        String jsonResult = todoController.getUser(samsId.toHexString());
-        Document sam = Document.parse(jsonResult);
-        assertEquals("Name should match", "Sam", sam.get("name"));
-        String noJsonResult = todoController.getUser(new ObjectId().toString());
-        assertNull("No name should match",noJsonResult);
+    public void getJohnByID() {
+        String jsonResult = todoController.getTodo(johnId.toHexString());
+        Document john = Document.parse(jsonResult);
+        assertEquals("Owner should match", "John", john.get("owner"));
+        String noJsonResult = todoController.getTodo(new ObjectId().toString());
+        assertNull("No owner should match",noJsonResult);
 
     }
-
+/*
     @Test
     public void addUserTest(){
         boolean bool = todoController.addNewUser("Brian",22,"umm", "brian@yahoo.com");

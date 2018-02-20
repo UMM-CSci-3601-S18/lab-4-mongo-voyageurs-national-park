@@ -24,7 +24,7 @@ public class TodoController {
         todoCollection = database.getCollection("todos");
     }
 
-    public String getUser(String id) {
+    public String getTodo(String id) {
         FindIterable<Document> jsonUsers
             = todoCollection
             .find(eq("_id", new ObjectId(id)));
