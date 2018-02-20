@@ -93,6 +93,7 @@ public class UserControllerSpec
         return ((BsonString) doc.get("name")).getValue();
     }
 
+
     @Test
     public void getAllUsers() {
         Map<String, String[]> emptyMap = new HashMap<>();
