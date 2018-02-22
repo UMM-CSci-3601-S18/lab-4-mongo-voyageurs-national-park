@@ -19,8 +19,6 @@ export class TodoListComponent implements OnInit {
   public todoStatus: string;
   public todoBody: string;
   public todoCategory: string;
-  public todoSortBy: string;
-  public todoLimit: number;
 
 
 // Inject the TodoListService into this component.
@@ -33,51 +31,27 @@ export class TodoListComponent implements OnInit {
 
   }
 
-  public filterTodos(searchLimit: number, sortBy: string): Todo[] {
+  public filterTodos(searchOwner: string, searchCategory: string): Todo[] {
 
     this.filteredTodos = this.todos;
 
-    //limit number of todos displayed
-    if(searchLimit != null && searchLimit > 0) {
-      this.filteredTodos = this.filteredTodos.slice(0, searchLimit);
-    }
+      // Filter by owner
+      if (searchOwner != null) {
+          searchOwner = searchOwner.toLocaleLowerCase();
 
-    //Sort todos alphabetically by a specified field
-    if(sortBy != null) {
-      this.filteredTodos = this.sortTodos();
-    }
+          this.filteredTodos = this.filteredTodos.filter(todo => {
+              return !searchOwner || todo.owner.toLowerCase().indexOf(searchOwner) !== -1;
+          });
+      }
 
-    return this.filteredTodos;
-  }
+      // Filter by category
+      if (searchCategory != null) {
+          searchCategory = searchCategory.toLocaleLowerCase();
 
-  private sortTodos(): Todo[] {
-
-    switch (this.todoSortBy.toLocaleLowerCase()) {
-      case "category": {
-        this.filteredTodos = this.filteredTodos.sort((todo1, todo2) => {
-          return todo1.category.localeCompare(todo2.category);
-        });
-        return this.filteredTodos;
+          this.filteredTodos = this.filteredTodos.filter(todo => {
+              return !searchCategory || todo.category.toLowerCase().indexOf(searchCategory) !== -1;
+          });
       }
-      case "owner": {
-        this.filteredTodos = this.filteredTodos.sort((todo1, todo2) => {
-          return todo1.owner.localeCompare(todo2.owner);
-        });
-        return this.filteredTodos;
-      }
-      case "status": {
-        this.filteredTodos = this.filteredTodos.sort((todo1, todo2) => {
-          return todo1.status.toString().localeCompare(todo2.status.toString());
-        });
-        return this.filteredTodos;
-      }
-      case "body": {
-        this.filteredTodos = this.filteredTodos.sort((todo1, todo2) => {
-          return todo1.body.localeCompare(todo2.body);
-        });
-        return this.filteredTodos;
-      }
-    }
 
     return this.filteredTodos;
   }
@@ -94,11 +68,11 @@ export class TodoListComponent implements OnInit {
     // Subscribe waits until the data is fully downloaded, then
     // performs an action on it (the first lambda)
 
-    const todos: Observable<Todo[]> = this.todoListService.getTodos(this.todoOwner, this.todoStatus, this.todoBody, this.todoCategory);
+    const todos: Observable<Todo[]> = this.todoListService.getTodos(this.todoStatus, this.todoBody);
     todos.subscribe(
       returnedTodos => {
         this.todos = returnedTodos;
-        this.filterTodos(this.todoLimit, this.todoSortBy);
+        this.filterTodos(this.todoOwner, this.todoCategory);
       },
       err => {
         console.log(err);
