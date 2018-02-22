@@ -1,0 +1,63 @@
+<div layout-gt-sm="row">
+  <div flex-gt-sm="80" flex-offset-gt-sm="10">
+    <mat-card>
+      <mat-card-title id="todo-list-title">Todos</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput id="todoOwner" #input placeholder="Filter by owner" (input)="todoOwner = $event.target.value">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="todoStatus" #input placeholder="Filter by status" (input)="todoStatus = $event.target.value">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="todoBody" #input placeholder="Filter by body"
+                 (input)="todoBody = $event.target.value">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="todoCategory" #input placeholder="Filter by category"
+                 (input)="todoCategory = $event.target.value">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="todoLimit" #input type="number" placeholder="Show only:"
+                 (input)="todoLimit = $event.target.value">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput id="todoSortBy" #input placeholder="Sort By:"
+                 (input)="todoSortBy = $event.target.value">
+        </mat-form-field>
+
+        <mat-accordion *ngIf="todos; else todosError">
+          <mat-expansion-panel #elem [id]="todo._id" class="todo" *ngFor="let todo of this.filterTodos(todoOwner, todoBody, todoStatus, todoCategory, todoLimit, todoSortBy)">
+            <mat-expansion-panel-header>
+
+              <mat-panel-title>{{todo.owner}}</mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <mat-panel-description>ID: {{todo._id}}</mat-panel-description>
+            <mat-panel-description>Complete: {{todo.status}}</mat-panel-description>
+            <mat-panel-description>{{todo.body}}</mat-panel-description>
+            <mat-panel-description>Category: {{todo.category}}</mat-panel-description>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <ng-template #todosError>
+          <mat-error>
+            There was a problem loading the todo list. Possibly the server is down or perhaps there are network
+            issues.
+          </mat-error>
+          <mat-error>
+            Please wait a bit and try again or start the server.
+          </mat-error>
+        </ng-template>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

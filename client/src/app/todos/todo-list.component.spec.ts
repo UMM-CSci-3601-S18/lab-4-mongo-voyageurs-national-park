@@ -1,108 +1,112 @@
-import {ComponentFixture, TestBed, async} from '@angular/core/testing';
-import {User} from './user';
-import {UserListComponent} from './user-list.component';
-import {UserListService} from './user-list.service';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Observable} from 'rxjs/Observable';
 import {FormsModule} from '@angular/forms';
-import {CustomModule} from '../custom.module';
 import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
-import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 
-describe('User list', () => {
+import {CustomModule} from '../custom.module';
 
-    let userList: UserListComponent;
-    let fixture: ComponentFixture<UserListComponent>;
+import {Todo} from './todo';
+import {TodoListComponent} from './todo-list.component';
+import {TodoListService} from './todo-list.service';
 
-    let userListServiceStub: {
-        getUsers: () => Observable<User[]>
+describe('Todo list', () => {
+
+    let todoList: TodoListComponent;
+    let fixture: ComponentFixture<TodoListComponent>;
+
+    let todoListServiceStub: {
+        getTodos: () => Observable<Todo[]>
     };
 
     beforeEach(() => {
         // stub UserService for test purposes
-        userListServiceStub = {
-            getUsers: () => Observable.of([
+        todoListServiceStub = {
+            getTodos: () => Observable.of([
                 {
-                    _id: 'chris_id',
-                    name: 'Chris',
-                    age: 25,
-                    company: 'UMM',
-                    email: 'chris@this.that'
+                    _id: 'hunter_id',
+                    owner: 'Hunter',
+                    status: true,
+                    category: 'Redshirt',
+                    body: 'Freedom Premium'
                 },
                 {
-                    _id: 'pat_id',
-                    name: 'Pat',
-                    age: 37,
-                    company: 'IBM',
-                    email: 'pat@something.com'
+                    _id: 'sungjae_id',
+                    owner: 'Sungjae',
+                    status: false,
+                    category: 'Morrissweater',
+                    body: 'Morris cougars!'
                 },
                 {
-                    _id: 'jamie_id',
-                    name: 'Jamie',
-                    age: 37,
-                    company: 'Frogs, Inc.',
-                    email: 'jamie@frogs.com'
-                }
+                    _id: 'david_id',
+                    owner: 'David',
+                    status: true,
+                    category: 'Purpleshirt',
+                    body: 'Plain shirt, how sad'
+                },
             ])
         };
 
+
         TestBed.configureTestingModule({
             imports: [CustomModule],
-            declarations: [UserListComponent],
+            declarations: [TodoListComponent],
             // providers:    [ UserListService ]  // NO! Don't provide the real service!
             // Provide a test-double instead
-            providers: [{provide: UserListService, useValue: userListServiceStub},
+            providers: [{provide: TodoListService, useValue: todoListServiceStub},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
         });
     });
 
     beforeEach(async(() => {
         TestBed.compileComponents().then(() => {
-            fixture = TestBed.createComponent(UserListComponent);
-            userList = fixture.componentInstance;
+            fixture = TestBed.createComponent(TodoListComponent);
+            todoList = fixture.componentInstance;
             fixture.detectChanges();
         });
     }));
 
-    it('contains all the users', () => {
-        expect(userList.users.length).toBe(3);
+    it('contains all the owners', () => {
+        expect(todoList.todos.length).toBe(3);
     });
 
-    it('contains a user named \'Chris\'', () => {
-        expect(userList.users.some((user: User) => user.name === 'Chris')).toBe(true);
+    it('contains a user named \'Hunter\'', () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === 'Hunter')).toBe(true);
     });
 
-    it('contain a user named \'Jamie\'', () => {
-        expect(userList.users.some((user: User) => user.name === 'Jamie')).toBe(true);
+    it('contains a user named \'David\'', () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === 'David')).toBe(true);
     });
 
-    it('doesn\'t contain a user named \'Santa\'', () => {
-        expect(userList.users.some((user: User) => user.name === 'Santa')).toBe(false);
+    it('contains a user named \'Darth Vader\'', () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === 'Darth Vader')).toBe(false);
     });
 
-    it('has two users that are 37 years old', () => {
-        expect(userList.users.filter((user: User) => user.age === 37).length).toBe(2);
+    it('has two todos that are true', () => {
+        expect(todoList.todos.filter((todo: Todo) => todo.status === true).length).toBe(2);
     });
 
-    it('user list filters by name', () => {
-        expect(userList.filteredUsers.length).toBe(3);
-        userList.userName = 'a';
-        userList.refreshUsers().subscribe(() => {
-            expect(userList.filteredUsers.length).toBe(2);
+    it('todo list filters by body', () => {
+        expect(todoList.filteredTodos.length).toBe(3);
+        todoList.todoBody = 'freedom';
+        todoList.refreshTodos().subscribe(() => {
+            expect(todoList.filteredTodos.length).toBe(1);
         });
     });
 
-    it('user list filters by age', () => {
-        expect(userList.filteredUsers.length).toBe(3);
-        userList.userAge = 37;
-        userList.refreshUsers().subscribe(() => {
-            expect(userList.filteredUsers.length).toBe(2);
+
+    it('todo list filters by category', () => {
+        expect(todoList.filteredTodos.length).toBe(3);
+        todoList.todoCategory = 'shirt';
+        todoList.refreshTodos().subscribe(() => {
+            expect(todoList.filteredTodos.length).toBe(2);
         });
     });
 
-    it('user list filters by name and age', () => {
+/*
+    it('todo list filters by category and owner', () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
         userList.userName = 'i';
@@ -110,9 +114,10 @@ describe('User list', () => {
             expect(userList.filteredUsers.length).toBe(1);
         });
     });
-
+*/
 });
 
+/*
 describe('Misbehaving User List', () => {
     let userList: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
@@ -221,4 +226,6 @@ describe('Adding a user', () => {
         userList.openDialog();
         expect(calledUser).toEqual(newUser);
     });
-});
+
+
+});*/
