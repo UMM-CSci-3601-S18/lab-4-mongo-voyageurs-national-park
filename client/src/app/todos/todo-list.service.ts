@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 import {Todo} from './todo';
-import {environment} from '../../../../../lab-3-angular-and-spark-no-i-in-team/client/src/environments/environment';
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class TodoListService {
