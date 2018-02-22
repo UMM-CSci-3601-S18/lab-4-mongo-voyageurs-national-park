@@ -88,11 +88,11 @@ describe('Todo list', () => {
         expect(todoList.todos.filter((todo: Todo) => todo.status === true).length).toBe(2);
     });
 
-    it('todo list filters by owner', () => {
+    it('todo list filters by body', () => {
         expect(todoList.filteredTodos.length).toBe(3);
-        todoList.todoOwner = 'a';
+        todoList.todoBody = 'freedom';
         todoList.refreshTodos().subscribe(() => {
-            expect(todoList.filteredTodos.length).toBe(2);
+            expect(todoList.filteredTodos.length).toBe(1);
         });
     });
 
@@ -105,8 +105,8 @@ describe('Todo list', () => {
         });
     });
 
-    /*
-    it('user list filters by name and age', () => {
+/*
+    it('todo list filters by category and owner', () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
         userList.userName = 'i';
@@ -114,9 +114,10 @@ describe('Todo list', () => {
             expect(userList.filteredUsers.length).toBe(1);
         });
     });
-
+*/
 });
 
+/*
 describe('Misbehaving User List', () => {
     let userList: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
@@ -226,6 +227,5 @@ describe('Adding a user', () => {
         expect(calledUser).toEqual(newUser);
     });
 
-    */
 
-});
+});*/

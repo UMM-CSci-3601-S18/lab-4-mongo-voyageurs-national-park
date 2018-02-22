@@ -15,7 +15,7 @@ export class TodoListService {
   }
 
   //the todos will be sorted if a parameter is given
-  getTodos(status: string, body: string): Observable<Todo[]> {
+  getTodos(status: string, owner: string): Observable<Todo[]> {
       this.todoUrl = this.baseUrl + '?';
 
       //add status filter
@@ -31,9 +31,9 @@ export class TodoListService {
           this.todoUrl += 'status=' + statusBool + '&';
       }
 
-      //add body filter
-      if (body != null) {
-          this.todoUrl += 'body=' + body;
+      //add owner filter
+      if (owner != null) {
+          this.todoUrl += 'owner=' + owner;
       }
 
     return this.httpClient.get<Todo[]>(this.todoUrl);
