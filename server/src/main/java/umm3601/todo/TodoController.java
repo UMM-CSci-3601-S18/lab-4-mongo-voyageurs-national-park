@@ -1,6 +1,7 @@
 package umm3601.todo;
 
 import com.google.gson.Gson;
+import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -43,8 +44,33 @@ public class TodoController {
         Document filterDoc = new Document();
 
         if (queryParams.containsKey("owner")) {
-            String targetOwner = queryParams.get("owner")[0];
-            filterDoc = filterDoc.append("owner", targetOwner);
+            String targetContent = queryParams.get("owner")[0];
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("owner", contentRegQuery);
+
+        }
+
+        if (queryParams.containsKey("category")) {
+            String targetContent = (queryParams.get("category")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("category", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("status")) {
+            boolean targetStatus = Boolean.parseBoolean(queryParams.get("status")[0]);
+            filterDoc = filterDoc.append("status", targetStatus);
+        }
+
+        if (queryParams.containsKey("body")) {
+            String targetContent = (queryParams.get("body")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("body", contentRegQuery);
         }
 
         //FindIterable comes from mongo, Document comes from Gson
@@ -52,4 +78,25 @@ public class TodoController {
 
         return JSON.serialize(matchingUsers);
     }
+
+    public boolean addNewTodo(String owner, String category, String body, Boolean status) {
+
+        Document newUser = new Document();
+        newUser.append("owner", owner);
+        newUser.append("category", category);
+        newUser.append("body", body);
+        newUser.append("status", status);
+
+        try {
+            todoCollection.insertOne(newUser);
+        }
+        catch(MongoException me)
+        {
+            me.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
 }
