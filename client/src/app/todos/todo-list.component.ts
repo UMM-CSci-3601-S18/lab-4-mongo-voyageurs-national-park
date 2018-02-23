@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {TodoListService} from './todo-list.service';
 import {Todo} from './todo';
 import {Observable} from 'rxjs/Observable';
+import {MatDialog} from '@angular/material';
+import {AddTodoComponent} from "./add-todo.component";
 
 @Component({
   selector: 'app-todo-list-component',
@@ -20,6 +22,8 @@ export class TodoListComponent implements OnInit {
   public todoBody: string;
   public todoCategory: string;
 
+  private highlightedID: {'$oid': string} = { '$oid': '' };
+
 
 // Inject the TodoListService into this component.
 // That's what happens in the following constructor.
@@ -27,9 +31,34 @@ export class TodoListComponent implements OnInit {
 // We can call upon the service for interacting
 // with the server.
 
-  constructor(private todoListService: TodoListService) {
+  constructor(private todoListService: TodoListService, public dialog: MatDialog) {
 
   }
+
+    isHighlighted(todo: Todo): boolean {
+        return todo._id['$oid'] === this.highlightedID['$oid'];
+    }
+
+    openDialog(): void {
+        const newTodo: Todo = {_id: '', owner: '', status: null, category: '', body: ''};
+        const dialogRef = this.dialog.open(AddTodoComponent, {
+            width: '500px',
+            data: { todo: newTodo }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.todoListService.addNewTodo(result).subscribe(
+                result => {
+                    this.highlightedID = result;
+                    this.refreshTodos();
+                },
+                err => {
+                    // This should probably be turned into some sort of meaningful response.
+                    console.log('There was an error adding the todo.');
+                    console.log('The error was ' + JSON.stringify(err));
+                });
+        });
+    }
 
   public filterTodos(searchBody: string, searchCategory: string): Todo[] {
 
@@ -80,8 +109,21 @@ export class TodoListComponent implements OnInit {
     return todos;
   }
 
+    loadService(): void {
+        this.todoListService.getTodos(this.todoStatus, this.todoOwner).subscribe(
+            todos => {
+                this.todos = todos;
+                this.filteredTodos = this.todos;
+            },
+            err => {
+                console.log(err);
+            }
+        );
+    }
+
 
   ngOnInit(): void {
     this.refreshTodos();
+    this.loadService();
   }
 }

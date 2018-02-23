@@ -2,6 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Observable} from 'rxjs/Observable';
 import {FormsModule} from '@angular/forms';
 import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
+import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -105,89 +106,90 @@ describe('Todo list', () => {
         });
     });
 
-/*
+
     it('todo list filters by category and owner', () => {
-        expect(userList.filteredUsers.length).toBe(3);
-        userList.userAge = 37;
-        userList.userName = 'i';
-        userList.refreshUsers().subscribe(() => {
-            expect(userList.filteredUsers.length).toBe(1);
+
+        expect(todoList.filteredTodos.length).toBe(3);
+        todoList.todoCategory = 'shirt';
+        todoList.todoBody = 'e';
+        todoList.refreshTodos().subscribe(() => {
+            expect(todoList.filteredTodos.length).toBe(1);
         });
     });
-*/
+
 });
 
-/*
-describe('Misbehaving User List', () => {
-    let userList: UserListComponent;
-    let fixture: ComponentFixture<UserListComponent>;
 
-    let userListServiceStub: {
-        getUsers: () => Observable<User[]>
+describe('Misbehaving Todo List', () => {
+    let todoList: TodoListComponent;
+    let fixture: ComponentFixture<TodoListComponent>;
+
+    let todoListServiceStub: {
+        getTodos: () => Observable<Todo[]>
     };
 
     beforeEach(() => {
-        // stub UserService for test purposes
-        userListServiceStub = {
-            getUsers: () => Observable.create(observer => {
+        // stub TodoService for test purposes
+        todoListServiceStub = {
+            getTodos: () => Observable.create(observer => {
                 observer.error('Error-prone observable');
             })
         };
 
         TestBed.configureTestingModule({
             imports: [FormsModule, CustomModule],
-            declarations: [UserListComponent],
-            providers: [{provide: UserListService, useValue: userListServiceStub},
+            declarations: [TodoListComponent],
+            providers: [{provide: TodoListService, useValue: todoListServiceStub},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
         });
     });
 
     beforeEach(async(() => {
         TestBed.compileComponents().then(() => {
-            fixture = TestBed.createComponent(UserListComponent);
-            userList = fixture.componentInstance;
+            fixture = TestBed.createComponent(TodoListComponent);
+            todoList = fixture.componentInstance;
             fixture.detectChanges();
         });
     }));
 
-    it('generates an error if we don\'t set up a UserListService', () => {
-        // Since the observer throws an error, we don't expect users to be defined.
-        expect(userList.users).toBeUndefined();
+    it('generates an error if we don\'t set up a TodoListService', () => {
+        // Since the observer throws an error, we don't expect todos to be defined.
+        expect(todoList.todos).toBeUndefined();
     });
 });
 
 
-describe('Adding a user', () => {
-    let userList: UserListComponent;
-    let fixture: ComponentFixture<UserListComponent>;
-    const newUser: User = {
+describe('Adding a todo', () => {
+    let todoList: TodoListComponent;
+    let fixture: ComponentFixture<TodoListComponent>;
+    const newTodo: Todo = {
         _id: '',
-        name: 'Sam',
-        age: 67,
-        company: 'Things and stuff',
-        email: 'sam@this.and.that'
+        owner: 'Ethan',
+        status: false,
+        category: 'plaid shirts',
+        body: 'grey and navy'
     };
-    const newId = 'sam_id';
+    const newId = 'ethan_id';
 
-    let calledUser: User;
+    let calledTodo: Todo;
 
-    let userListServiceStub: {
-        getUsers: () => Observable<User[]>,
-        addNewUser: (newUser: User) => Observable<{'$oid': string}>
+    let todoListServiceStub: {
+        getTodos: () => Observable<Todo[]>,
+        addNewTodo: (newTodo: Todo) => Observable<{'$oid': string}>
     };
     let mockMatDialog: {
-        open: (AddUserComponent, any) => {
-            afterClosed: () => Observable<User>
+        open: (AddTodoComponent, any) => {
+            afterClosed: () => Observable<Todo>
         };
     };
 
     beforeEach(() => {
-        calledUser = null;
-        // stub UserService for test purposes
-        userListServiceStub = {
-            getUsers: () => Observable.of([]),
-            addNewUser: (newUser: User) => {
-                calledUser = newUser;
+        calledTodo = null;
+        // stub TodoListService for test purposes
+        todoListServiceStub = {
+            getTodos: () => Observable.of([]),
+            addNewTodo: (newTodo: Todo) => {
+                calledTodo = newTodo;
                 return Observable.of({
                     '$oid': newId
                 });
@@ -197,7 +199,7 @@ describe('Adding a user', () => {
             open: () => {
                 return {
                     afterClosed: () => {
-                        return Observable.of(newUser);
+                        return Observable.of(newTodo);
                     }
                 };
             }
@@ -205,9 +207,9 @@ describe('Adding a user', () => {
 
         TestBed.configureTestingModule({
             imports: [FormsModule, CustomModule],
-            declarations: [UserListComponent],
+            declarations: [TodoListComponent],
             providers: [
-                {provide: UserListService, useValue: userListServiceStub},
+                {provide: TodoListService, useValue: todoListServiceStub},
                 {provide: MatDialog, useValue: mockMatDialog},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
         });
@@ -215,17 +217,17 @@ describe('Adding a user', () => {
 
     beforeEach(async(() => {
         TestBed.compileComponents().then(() => {
-            fixture = TestBed.createComponent(UserListComponent);
-            userList = fixture.componentInstance;
+            fixture = TestBed.createComponent(TodoListComponent);
+            todoList = fixture.componentInstance;
             fixture.detectChanges();
         });
     }));
 
-    it('calls UserListService.addUser', () => {
-        expect(calledUser).toBeNull();
-        userList.openDialog();
-        expect(calledUser).toEqual(newUser);
+    it('calls TodoListService.addTodo', () => {
+        expect(calledTodo).toBeNull();
+        todoList.openDialog();
+        expect(calledTodo).toEqual(newTodo);
     });
 
 
-});*/
+});

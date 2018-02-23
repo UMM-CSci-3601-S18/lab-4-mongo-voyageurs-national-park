@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -42,4 +42,15 @@ export class TodoListService {
   getTodoById(id: string): Observable<Todo> {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
+
+    addNewTodo(newTodo: Todo): Observable<{'$oid': string}> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+        };
+
+        // Send post request to add a new todo with the todo data as the body with specified headers.
+        return this.httpClient.post<{'$oid': string}>(this.todoUrl + '/new', newTodo, httpOptions);
+    }
 }
