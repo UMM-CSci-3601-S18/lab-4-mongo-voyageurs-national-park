@@ -4,9 +4,6 @@
       <mat-card-title id="todo-list-title">Todos</mat-card-title>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <mat-form-field>
-          <input matInput id="todoOwner" #input placeholder="Filter by owner" (input)="todoOwner = $event.target.value">
-        </mat-form-field>
 
         <mat-form-field>
           <input matInput id="todoStatus" #input placeholder="Filter by status" (input)="todoStatus = $event.target.value">
@@ -22,18 +19,17 @@
                  (input)="todoCategory = $event.target.value">
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput id="todoLimit" #input type="number" placeholder="Show only:"
-                 (input)="todoLimit = $event.target.value">
-        </mat-form-field>
+          <mat-form-field>
+              <input matInput id="todoOwner" #input type="search" placeholder="Search for owner" [(ngModel)]="todoOwner" />
+              <button mat-button id="ownerClearSearch" type="button" *ngIf="todoOwner" matSuffix mat-icon-button aria-label="clear" (click)="todoOwner='';loadService()">
+                  <mat-icon>close</mat-icon>
+              </button>
+          </mat-form-field>
+          <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
 
-        <mat-form-field>
-          <input matInput id="todoSortBy" #input placeholder="Sort By:"
-                 (input)="todoSortBy = $event.target.value">
-        </mat-form-field>
 
-        <mat-accordion *ngIf="todos; else todosError">
-          <mat-expansion-panel #elem [id]="todo._id" class="todo" *ngFor="let todo of this.filterTodos(todoOwner, todoBody, todoStatus, todoCategory, todoLimit, todoSortBy)">
+          <mat-accordion *ngIf="todos; else todosError">
+          <mat-expansion-panel #elem [id]="todo._id" class="todo" *ngFor="let todo of this.filterTodos(todoBody, todoCategory)">
             <mat-expansion-panel-header>
 
               <mat-panel-title>{{todo.owner}}</mat-panel-title>
