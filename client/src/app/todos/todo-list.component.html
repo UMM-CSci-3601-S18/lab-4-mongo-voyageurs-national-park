@@ -12,10 +12,16 @@
       <mat-card-content>
 
 
-
-        <mat-form-field>
+        <!--<mat-form-field>
           <input matInput id="todoStatus" #input placeholder="Filter by status" (input)="todoStatus = $event.target.value">
-        </mat-form-field>
+        </mat-form-field>-->
+
+          <mat-radio-group id="todoStatus" #input [(ngModel)]="todoStatus" (change)="loadService()">
+              <mat-radio-button value="true">Complete</mat-radio-button>
+              <mat-radio-button value="false">Incomplete</mat-radio-button>
+              <mat-radio-button value="all">All</mat-radio-button>
+          </mat-radio-group>
+
 
         <mat-form-field>
           <input matInput id="todoBody" #input placeholder="Filter by body"

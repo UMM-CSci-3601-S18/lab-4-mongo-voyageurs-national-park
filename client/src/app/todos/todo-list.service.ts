@@ -22,7 +22,7 @@ export class TodoListService {
       }
 
       //add status filter
-      if (status != null) {
+      if (status != null && status != "all") {
           /*let statusBool: boolean;
           if (status === 'complete') {
               statusBool = true;
