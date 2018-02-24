@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable} from 'rxjs/Observable';
 
@@ -15,20 +15,23 @@ export class TodoListService {
   }
 
   //the todos will be sorted if a parameter is given
-  getTodos(status: string, owner: string): Observable<Todo[]> {
-      this.todoUrl = this.baseUrl + '?';
+  getTodos(status?: string, owner?: string): Observable<Todo[]> {
+
+      if (status != null || owner != null) {
+          this.todoUrl = this.baseUrl + '?';
+      }
 
       //add status filter
       if (status != null) {
-          let statusBool: boolean;
+          /*let statusBool: boolean;
           if (status === 'complete') {
               statusBool = true;
           }
           else if (status === 'incomplete') {
               statusBool = false;
-          }
+          }*/
 
-          this.todoUrl += 'status=' + statusBool + '&';
+          this.todoUrl += 'status=' + status + '&';
       }
 
       //add owner filter
@@ -42,4 +45,15 @@ export class TodoListService {
   getTodoById(id: string): Observable<Todo> {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
+
+    addNewTodo(newTodo: Todo): Observable<{'$oid': string}> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+        };
+
+        // Send post request to add a new todo with the todo data as the body with specified headers.
+        return this.httpClient.post<{'$oid': string}>(this.todoUrl + '/new', newTodo, httpOptions);
+    }
 }

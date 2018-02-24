@@ -19,6 +19,7 @@ import {AddUserComponent} from './users/add-user.component';
 import {TodoListComponent} from "./todos/todo-list.component";
 import {TodoComponent} from "./todos/todo.component";
 import {TodoListService} from "./todos/todo-list.service";
+import {AddTodoComponent} from "./todos/add-todo.component";
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {TodoListService} from "./todos/todo-list.service";
         UserListComponent,
         UserComponent,
         AddUserComponent,
+        AddTodoComponent,
         TodoListComponent,
         TodoComponent
     ],
