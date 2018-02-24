@@ -11,3 +11,7 @@
 #list-title {
   padding-right: 14px;
 }
+
+#todo-list-title {
+    font-size: 100px;
+}

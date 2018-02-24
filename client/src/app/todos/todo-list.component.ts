@@ -6,10 +6,9 @@ import {MatDialog} from '@angular/material';
 import {AddTodoComponent} from "./add-todo.component";
 
 @Component({
-  selector: 'app-todo-list-component',
+  selector: 'todo-list-component',
   templateUrl: 'todo-list.component.html',
   styleUrls: ['./todo-list.component.css'],
-  providers: []
 })
 
 export class TodoListComponent implements OnInit {
@@ -31,7 +30,7 @@ export class TodoListComponent implements OnInit {
 // We can call upon the service for interacting
 // with the server.
 
-  constructor(private todoListService: TodoListService, public dialog: MatDialog) {
+  constructor(public todoListService: TodoListService, public dialog: MatDialog) {
 
   }
 
