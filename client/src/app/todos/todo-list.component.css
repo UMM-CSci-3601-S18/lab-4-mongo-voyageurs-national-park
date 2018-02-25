@@ -11,3 +11,16 @@
 #list-title {
   padding-right: 14px;
 }
+
+#todo-list-title {
+    font-size: 100px;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container > * {
+    width: 100%;
+}

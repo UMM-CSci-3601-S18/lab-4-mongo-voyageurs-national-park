@@ -22,7 +22,7 @@ export class TodoListService {
       }
 
       //add status filter
-      if (status != null) {
+      if (status != null && status != "all") {
           /*let statusBool: boolean;
           if (status === 'complete') {
               statusBool = true;
@@ -54,6 +54,6 @@ export class TodoListService {
         };
 
         // Send post request to add a new todo with the todo data as the body with specified headers.
-        return this.httpClient.post<{'$oid': string}>(this.todoUrl + '/new', newTodo, httpOptions);
+        return this.httpClient.post<{'$oid': string}>(this.baseUrl + '/new', newTodo, httpOptions);
     }
 }
