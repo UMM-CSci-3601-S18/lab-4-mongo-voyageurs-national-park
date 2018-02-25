@@ -20,7 +20,6 @@ import {TodoListComponent} from "./todos/todo-list.component";
 import {TodoComponent} from "./todos/todo.component";
 import {TodoListService} from "./todos/todo-list.service";
 import {AddTodoComponent} from "./todos/add-todo.component";
-import {TodoButton} from "./todos/todo-button.component";
 
 
 @NgModule({
@@ -39,7 +38,6 @@ import {TodoButton} from "./todos/todo-button.component";
         AddTodoComponent,
         TodoListComponent,
         TodoComponent,
-        TodoButton,
     ],
     providers: [
         UserListService,
