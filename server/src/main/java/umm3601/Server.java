@@ -77,6 +77,7 @@ public class Server {
         get("api/todos", todoRequestHandler::getTodos);
         get("api/todos/:id", todoRequestHandler::getTodoJSON);
         post("api/todos/new", todoRequestHandler::addNewTodo);
+        get("api/todoSummary", todoRequestHandler::getTodoSummary);
 
 
         // An example of throwing an unhandled exception so you can see how the
