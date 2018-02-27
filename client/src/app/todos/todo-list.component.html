@@ -1,22 +1,18 @@
-<div>
-    <ol>
-        <button id = "addNewTodo" mat-raised-button (click)="openDialog()">Add A New Todo</button>
-    </ol>
-</div>
-
 <div layout-gt-sm="row">
   <div flex-gt-sm="80" flex-offset-gt-sm="10">
     <mat-card>
       <mat-card-title id="todo-list-title">Todos</mat-card-title>
       <mat-divider></mat-divider>
-      <mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content> <button id = "addNewTodo" mat-raised-button (click)="openDialog()">Add A New Todo</button> </mat-card-content>
+
+        <mat-card-content>
 
 
-        <!--<mat-form-field>
-          <input matInput id="todoStatus" #input placeholder="Filter by status" (input)="todoStatus = $event.target.value">
-        </mat-form-field>-->
         <mat-card>
-            <mat-card-content>
+            <mat-card-content  id="filterOptionsCard">
                 <span id="ownerInput">
                     <mat-form-field>
                         <input matInput id="todoOwner" #input type="search" placeholder="Search for owner" [(ngModel)]="todoOwner" />
@@ -24,7 +20,7 @@
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
+                    <button mat-raised-button id="submitOwner" color="primary" #input type="button" (click)="loadService()">Submit</button>
                 </span>
 
                 <br>
@@ -49,12 +45,12 @@
 
                 <br>
 
-              <mat-select matInput [(ngModel)]="todoCategory" placeholder="Select a category">
+              <mat-select matInput id="categoryList" [(ngModel)]="todoCategory" placeholder="Select a category">
                   <mat-option>All</mat-option>
-                  <mat-option value="groceries">Groceries </mat-option>
-                  <mat-option value="homework">Homework</mat-option>
-                  <mat-option value="software design">Software Design</mat-option>
-                  <mat-option value="video games">Video Games</mat-option>
+                  <mat-option id="groceryOption" value="groceries">Groceries </mat-option>
+                  <mat-option id="homeworkOption" value="homework">Homework</mat-option>
+                  <mat-option id="softwareDesignOption" value="software design">Software Design</mat-option>
+                  <mat-option id="videoGamesOption" value="video games">Video Games</mat-option>
               </mat-select>
             </mat-card-content>
         </mat-card>
@@ -66,13 +62,13 @@
           <mat-expansion-panel #elem [id]="todo._id['$oid']" class="todo" *ngFor="let todo of this.filterTodos(todoBody, todoCategory)">
             <mat-expansion-panel-header>
 
-              <mat-panel-title><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>
+                <mat-panel-title matTooltip="Category: {{todo.category}}"><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>
 
             </mat-expansion-panel-header>
-            <mat-panel-description>ID: {{todo._id['$oid']}}</mat-panel-description>
-            <mat-panel-description *ngIf="todo.status">Complete</mat-panel-description>
-              <mat-panel-description *ngIf="!todo.status">Incomplete</mat-panel-description>
-              <mat-panel-description>{{todo.body}}</mat-panel-description>
+            <mat-panel-description>Unique ID: {{todo._id['$oid']}}</mat-panel-description>
+            <mat-panel-description *ngIf="todo.status">Status: Complete</mat-panel-description>
+              <mat-panel-description *ngIf="!todo.status">Status: Incomplete</mat-panel-description>
+              <mat-panel-description>Weird Latin text: {{todo.body}}</mat-panel-description>
             <mat-panel-description>Category: {{todo.category}}</mat-panel-description>
 
           </mat-expansion-panel>

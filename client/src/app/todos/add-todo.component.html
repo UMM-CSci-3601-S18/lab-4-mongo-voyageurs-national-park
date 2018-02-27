@@ -26,9 +26,10 @@
                     <mat-radio-button value="0">Incomplete</mat-radio-button>
                 </mat-radio-group>
                 <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
-                <button mat-button id="confirmAddTodoButton" [mat-dialog-close]="data.todo" type="button">Add todo</button>
             </mat-card-content>
         </mat-card>
+        <button mat-raised-button id="confirmAddTodoButton" [mat-dialog-close]="data.todo" type="button">Add todo</button>
+
         <button mat-raised-button id="exitWithoutAddingButton" (click)="onNoClick()" type="button">Exit</button>
     </div>
 </div>
