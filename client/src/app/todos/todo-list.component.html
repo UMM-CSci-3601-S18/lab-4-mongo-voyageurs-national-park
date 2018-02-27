@@ -24,7 +24,7 @@
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
+                    <button mat-raised-button id="submitOwner" color="primary" #input type="button" (click)="loadService()">Submit</button>
                 </span>
 
                 <br>
@@ -66,7 +66,9 @@
           <mat-expansion-panel #elem [id]="todo._id['$oid']" class="todo" *ngFor="let todo of this.filterTodos(todoBody, todoCategory)">
             <mat-expansion-panel-header>
 
-              <mat-panel-title><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>
+              <!--<mat-panel-title><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>-->
+                <mat-panel-title>{{todo.owner}}</mat-panel-title>
+
 
             </mat-expansion-panel-header>
             <mat-panel-description>ID: {{todo._id['$oid']}}</mat-panel-description>
