@@ -7,12 +7,17 @@
                 <mat-form-field>
                     <input matInput #input id="ownerField" placeholder="Owner" [(ngModel)]="data.todo.owner">
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput #input id="categoryField" placeholder="Category" [(ngModel)]="data.todo.category">
-                </mat-form-field>
+
                 <mat-form-field>
                     <input matInput #input id="bodyField" placeholder="Body" [(ngModel)]="data.todo.body">
                 </mat-form-field>
+
+                <mat-select matInput #input [(ngModel)]="data.todo.category" placeholder="Category">
+                    <mat-option value="groceries">Groceries </mat-option>
+                    <mat-option value="homework">Homework</mat-option>
+                    <mat-option value="software design">Software Design</mat-option>
+                    <mat-option value="video games">Video Games</mat-option>
+                </mat-select>
 
                 <p>Status:</p>
 
