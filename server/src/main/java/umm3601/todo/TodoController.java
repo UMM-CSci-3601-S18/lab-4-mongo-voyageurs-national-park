@@ -108,22 +108,19 @@ public class TodoController {
     }
 
     public String getTodoSummary() {
+        double count = todoCollection.count();
+        double percent = 100 / count;
 
-        //get number of todos complete for each owner
-        AggregateIterable<Document> totalByOwner = todoCollection.aggregate(
-            Arrays.asList(
-                Aggregates.group("$owner", Accumulators.sum("count", 1))
-            )
-        );
-
-        AggregateIterable<Document> doneByOwner = todoCollection.aggregate(
+        //return the percentage of todos done from the entire database
+        //this is all I can do because I don't understand mongo aggregate and I can't get the values I want from it
+        AggregateIterable<Document> totalDone = todoCollection.aggregate(
             Arrays.asList(
                 Aggregates.match(Filters.eq("status", true)),
-                Aggregates.group("$owner", Accumulators.sum("count", 1))
+                Aggregates.group("", Accumulators.sum("finished todos", 1) , Accumulators.sum("percent done", percent))
             )
         );
 
-        return JSON.serialize(doneByOwner);
+        return JSON.serialize(totalDone);
     }
 
     public static void main(String[] args) {
@@ -131,7 +128,7 @@ public class TodoController {
         MongoDatabase userDatabase = mongoClient.getDatabase("dev");
         TodoController todoController = new TodoController(userDatabase);
 
-        todoController.getTodoSummary();
+        System.out.println(todoController.getTodoSummary());
     }
 
 }

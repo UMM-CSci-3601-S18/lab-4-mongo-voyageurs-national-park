@@ -7,15 +7,24 @@
                 <mat-form-field>
                     <input matInput #input id="ownerField" placeholder="Owner" [(ngModel)]="data.todo.owner">
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput #input id="categoryField" placeholder="Category" [(ngModel)]="data.todo.category">
-                </mat-form-field>
+
                 <mat-form-field>
                     <input matInput #input id="bodyField" placeholder="Body" [(ngModel)]="data.todo.body">
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput #input id="statusField" placeholder="Status" [(ngModel)]="data.todo.status">
-                </mat-form-field>
+
+                <mat-select matInput #input [(ngModel)]="data.todo.category" placeholder="Category">
+                    <mat-option value="groceries">Groceries </mat-option>
+                    <mat-option value="homework">Homework</mat-option>
+                    <mat-option value="software design">Software Design</mat-option>
+                    <mat-option value="video games">Video Games</mat-option>
+                </mat-select>
+
+                <p>Status:</p>
+
+                <mat-radio-group matInput id="statusField" #input [(ngModel)]="data.todo.status">
+                    <mat-radio-button value="1">Complete</mat-radio-button>
+                    <mat-radio-button value="0">Incomplete</mat-radio-button>
+                </mat-radio-group>
                 <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
                 <button mat-button id="confirmAddTodoButton" [mat-dialog-close]="data.todo" type="button">Add todo</button>
             </mat-card-content>
