@@ -42,8 +42,8 @@ export class TodoPage {
     }
 
     clearOwnerField() {
-        const clearButton = element(by.id('ownerClearSearch'));
-        clearButton.click();
+        const input = element(by.id('ownerClearSearch'));
+        input.click();
     }
 
     clearBodyField() {
@@ -51,36 +51,69 @@ export class TodoPage {
         input.click();
     }
 
-    selectCompleteStatus() {
-        const input = element(by.id('complete'))
+    chooseCompleteStatus() {
+        const input = element(by.id('complete'));
         input.click();
     }
 
-    selectIncompleteStatus() {
-        const input = element(by.id('incomplete'))
+    chooseIncompleteStatus() {
+        const input = element(by.id('incomplete'));
         input.click();
     }
 
-    selectAllStatuses() {
-        const input = element(by.id('allStatus'))
+    chooseAllStatuses() {
+        const input = element(by.id('allStatus'));
         input.click();
+    }
+
+    chooseGroceries() {
+        const input = element(by.id('categoryList'));
+        input.click();
+        this.selectDownKey();
+        this.selectEnter();
+    }
+
+    chooseHomework() {
+        const input = element(by.id('categoryList'));
+        input.click();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectEnter();
+    }
+
+    chooseSoftwareDesign() {
+        const input = element(by.id('categoryList'));
+        input.click();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectEnter();
+    }
+
+    chooseVideoGames() {
+        const input = element(by.id('categoryList'));
+        input.click();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectDownKey();
+        this.selectEnter();
     }
 
     selectUpKey() {
         browser.actions().sendKeys(Key.ARROW_UP).perform();
     }
 
+    selectDownKey() {
+        browser.actions().sendKeys(Key.ARROW_DOWN).perform();
+    }
+
     backspace() {
         browser.actions().sendKeys(Key.BACK_SPACE).perform();
     }
 
-
-    getCategory(category: string) {
-        const input = element(by.id('todoCategory'));
-        input.click();
-        input.sendKeys(category);
-        const selectButton = element(by.id('submit'));
-        selectButton.click();
+    selectEnter() {
+        browser.actions().sendKeys(Key.ENTER).perform();
     }
 
     getUniqueTodo(anID: string) {

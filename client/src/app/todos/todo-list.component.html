@@ -49,12 +49,12 @@
 
                 <br>
 
-              <mat-select matInput [(ngModel)]="todoCategory" placeholder="Select a category">
+              <mat-select matInput id="categoryList" [(ngModel)]="todoCategory" placeholder="Select a category">
                   <mat-option>All</mat-option>
-                  <mat-option value="groceries">Groceries </mat-option>
-                  <mat-option value="homework">Homework</mat-option>
-                  <mat-option value="software design">Software Design</mat-option>
-                  <mat-option value="video games">Video Games</mat-option>
+                  <mat-option id="groceryOption" value="groceries">Groceries </mat-option>
+                  <mat-option id="homeworkOption" value="homework">Homework</mat-option>
+                  <mat-option id="softwareDesignOption" value="software design">Software Design</mat-option>
+                  <mat-option id="videoGamesOption" value="video games">Video Games</mat-option>
               </mat-select>
             </mat-card-content>
         </mat-card>
@@ -66,9 +66,7 @@
           <mat-expansion-panel #elem [id]="todo._id['$oid']" class="todo" *ngFor="let todo of this.filterTodos(todoBody, todoCategory)">
             <mat-expansion-panel-header>
 
-              <!--<mat-panel-title><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>-->
-                <mat-panel-title>{{todo.owner}}</mat-panel-title>
-
+              <mat-panel-title><mat-icon id="check" *ngIf="todo.status">check_circle</mat-icon><mat-icon id="exed" *ngIf="!todo.status">highlight_off</mat-icon> &nbsp; {{todo.owner}}</mat-panel-title>
 
             </mat-expansion-panel-header>
             <mat-panel-description>ID: {{todo._id['$oid']}}</mat-panel-description>

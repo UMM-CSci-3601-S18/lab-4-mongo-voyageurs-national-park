@@ -92,28 +92,6 @@ describe('Todo list service: ', () => {
         expect(req.request.method).toEqual('GET');
         req.flush(mTodos);
     });
-/*
-    it('filterByCategory(userCompany) deals appropriately with a URL that already had a company', () => {
-        currentlyImpossibleToGenerateSearchUserUrl = todoListService.baseUrl + '?company=f&something=k&';
-        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
-        userListService.filterByCompany('m');
-        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '?something=k&company=m&');
-    });
-
-    it('filterByCompany(userCompany) deals appropriately with a URL that already had some filtering, but no company', () => {
-        currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?something=k&';
-        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
-        userListService.filterByCompany('m');
-        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '?something=k&company=m&');
-    });
-
-    it('filterByCompany(userCompany) deals appropriately with a URL has the keyword company, but nothing after the =', () => {
-        currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?company=&';
-        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
-        userListService.filterByCompany('');
-        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '');
-    });
-*/
 
     it('getTodoById() calls api/todos/id', () => {
         const targetTodo: Todo = testTodos[1];
