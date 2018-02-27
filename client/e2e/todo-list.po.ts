@@ -100,6 +100,23 @@ export class TodoPage {
         this.selectEnter();
     }
 
+    chooseHomeworkCategoryInDialog(){
+        const input = element(by.id('dialogCategory'));
+        input.click();
+        this.selectDownKey();
+        this.selectEnter();
+    }
+
+    chooseCompleteInDialog() {
+        const input = element(by.id('dialogComplete'));
+        input.click();
+    }
+
+    actuallyAddTodo() {
+        const input = element(by.id('confirmAddTodoButton'));
+        input.click();
+    }
+
     selectUpKey() {
         browser.actions().sendKeys(Key.ARROW_UP).perform();
     }

@@ -11,7 +11,7 @@ const origFn = browser.driver.controlFlow().execute;
     //This delay is only put here so that you can watch the browser do its thing.
     //If you're tired of it taking long you can remove this call
         origFn.call(browser.driver.controlFlow(), function () {
-            return protractor.promise.delayed(100);
+            return protractor.promise.delayed(1);
         });
 
         return origFn.apply(browser.driver.controlFlow(), args);
@@ -121,5 +121,41 @@ describe('Todo list', () => {
         expect(page.getUniqueTodo('58af3a600343927e48e87327')).toEqual('check_circle\n' +
             '  Dawn');
     })
+
+    it('Should have an add todo button', () => {
+        page.navigateTo();
+        expect(page.buttonExists()).toBeTruthy();
+    });
+
+    it('Should open a dialog box when add todo button is clicked', () => {
+        page.navigateTo();
+        expect(element(by.css('add-todo')).isPresent()).toBeFalsy('There should not be a modal window yet');
+        element(by.id('addNewTodo')).click();
+        expect(element(by.css('add-todo')).isPresent()).toBeTruthy('There should be a modal window now');
+    });
+
+    it('Should actually add the todo with the information we put in the fields', () => {
+        page.navigateTo();
+        page.clickAddTodoButton();
+        element(by.id('ownerField')).sendKeys('Kyle DeBates');
+        element(by.id('bodyField')).sendKeys('I never show up to classes!');
+        page.chooseHomeworkCategoryInDialog();
+        page.chooseCompleteInDialog();
+        page.actuallyAddTodo();
+    });
+
+    it('Should allow us to put information into the fields of the add todo dialog', () => {
+        page.navigateTo();
+        page.clickAddTodoButton();
+        expect(element(by.id('ownerField')).isPresent()).toBeTruthy('There should be an owner field');
+        element(by.id('ownerField')).sendKeys('Avery Koranda');
+        expect(element(by.id('bodyField')).isPresent()).toBeTruthy('There should be a body field');
+        element(by.id('bodyField')).sendKeys('I go to every class that I can.');
+        expect(element(by.id('statusField')).isPresent()).toBeTruthy('There should be a status field');
+        page.chooseCompleteInDialog();
+        expect(element(by.id('dialogCategory')).isPresent()).toBeTruthy('There should be a category field');
+        page.chooseHomeworkCategoryInDialog();
+        element(by.id('exitWithoutAddingButton')).click();
+    });
 
 });
