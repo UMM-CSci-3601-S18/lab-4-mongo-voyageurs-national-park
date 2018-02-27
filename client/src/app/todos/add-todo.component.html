@@ -14,11 +14,11 @@
                     <input matInput #input id="bodyField" placeholder="Body" [(ngModel)]="data.todo.body">
                 </mat-form-field>
 
-                <br>
+                <p>Status:</p>
 
-                <mat-radio-group id="statusField" #input [(ngModel)]="data.todo.status">
-                    <mat-radio-button value="true">Complete</mat-radio-button>
-                    <mat-radio-button value="false">Incomplete</mat-radio-button>
+                <mat-radio-group matInput id="statusField" #input [(ngModel)]="data.todo.status">
+                    <mat-radio-button value="1">Complete</mat-radio-button>
+                    <mat-radio-button value="0">Incomplete</mat-radio-button>
                 </mat-radio-group>
                 <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
                 <button mat-button id="confirmAddTodoButton" [mat-dialog-close]="data.todo" type="button">Add todo</button>
